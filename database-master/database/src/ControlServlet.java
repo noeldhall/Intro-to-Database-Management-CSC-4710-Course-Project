@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -25,9 +27,33 @@ import java.sql.PreparedStatement;
 public class ControlServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private PeopleDAO peopleDAO;
+    private RegisteredUserDAO registeredUserDAO;
+    private InitDB initDb;
+    private LoginDAO loginDAO;
+   //CommentsDAO cD,FollowDAO fD,ImageTagDAO fPD,LikeDAO lD,ImageDAO iD
+    private CommentsDAO commentsDAO;
+    private FollowDAO followDAO;
+    private ImageTagDAO imageTagDAO;
+    private LikeDAO likeDAO;
+    private ImageDAO imageDAO;
+    
+
  
     public void init() {
         peopleDAO = new PeopleDAO(); 
+        try {
+			registeredUserDAO=new RegisteredUserDAO();
+			loginDAO=new LoginDAO();
+			initDb=new InitDB();
+			followDAO=new FollowDAO();
+			imageTagDAO=new ImageTagDAO();
+			commentsDAO=new CommentsDAO();
+			likeDAO=new LikeDAO();
+		        imageDAO=new ImageDAO();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
  
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -41,6 +67,23 @@ public class ControlServlet extends HttpServlet {
         System.out.println(action);
         try {
             switch (action) {
+            case "/register":
+            	registerUser(request,response);
+            	break;
+            case "/authenticate":
+            	authenticate(request,response);
+            	break;
+            case "/login":
+            	RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");       
+                dispatcher.forward(request, response);
+                break;
+            case "/initialize":
+            //	initDb=new InitDB();
+            	//CommentsDAO cD,FollowDAO fD,ImageTagDAO fPD,LikeDAO lD,ImageDAO iD
+            	initDb.initializeDatabase(commentsDAO,followDAO,imageTagDAO, likeDAO,imageDAO);
+            	 dispatcher = request.getRequestDispatcher("accountView.jsp");       
+                dispatcher.forward(request, response);
+            	break;
             case "/new":
                 showNewForm(request, response);
                 break;
@@ -60,9 +103,41 @@ public class ControlServlet extends HttpServlet {
             	listPeople(request, response);           	
                 break;
             }
-        } catch (SQLException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             throw new ServletException(ex);
         }
+    }
+    
+    private void authenticate(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, ServletException, IOException {
+    	String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        LoginBean loginBean = new LoginBean();
+        loginBean.setUsername(username);
+        loginBean.setPassword(password);
+
+        if (loginDAO.validate(loginBean)==true)
+        {
+        	RequestDispatcher dispatcher = request.getRequestDispatcher("root.jsp");       
+            dispatcher.forward(request, response);
+        }
+        else
+        {
+        	RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");       
+            dispatcher.forward(request, response);
+        }
+    }
+    private void registerUser(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, IOException {
+    	String email=request.getParameter("email");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String birthday = request.getParameter("birthday");
+        String gender =request.getParameter("gender");
+        String password=request.getParameter("password");
+        String confirmation=request.getParameter("confirmation");
+        RegisteredUser newUser = new RegisteredUser(firstName, lastName, email,password,gender,birthday,0,0);
+        registeredUserDAO.insert(newUser);
+        response.sendRedirect("login");  // The sendRedirect() method works at client side and sends a new request
     }
     
     private void listPeople(HttpServletRequest request, HttpServletResponse response)

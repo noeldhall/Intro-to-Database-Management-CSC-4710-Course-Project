@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="database">
+        
+    <wb-module deploy-name="CSC_4710_Course_Project">
+                
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="database"/>
-        <property name="java-output-path" value="/database/build/classes"/>
+                
+        <property name="java-output-path" value="/CSC_4710_Course_Project/build/classes"/>
+        <property name="context-root" value="CSC_4710_Course_Project"/>
+            
     </wb-module>
+    
 </project-modules>
