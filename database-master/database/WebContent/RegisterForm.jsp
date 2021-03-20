@@ -5,30 +5,32 @@
 <head><title>Registration</title></head>
 <body>
 	<div align="center">
-		<form action="register" method="post">
+		<p> ${errorOne } </p>
+		<p> ${errorTwo } </p>
+		<form action="register">
 			<table border="1" cellpadding="5">
 				<tr>
-					<th>Email: </th>
+					<th>Username: </th>
 					<td align="center" colspan="3">
-						<input type="text" name="email" size="45"  value="johnny@gmail.com" onfocus="this.value=''">
+						<input type="text" name="username" size="45" onfocus="this.value=''">
 					</td>
 				</tr>
 				<tr>
 					<th>First Name: </th>
 					<td align="center" colspan="3">
-						<input type="text" name="firstName" size="45" value="Johnny" onfocus="this.value=''">
+						<input type="text" name="firstName" size="45" onfocus="this.value=''">
 					</td>
 				</tr>
 				<tr>
 					<th>Last Name: </th>
 					<td align="center" colspan="3">
-						<input type="text" name="lastName" size="45" value="jack" onfocus="this.value=''">
+						<input type="text" name="lastName" size="45"  onfocus="this.value=''">
 					</td>
 				</tr>
 				<tr>
 					<th>Birthday: </th>
 					<td align="center" colspan="3">
-						<input type="text" name="birthday" size="45" value="1995-08-23" onfocus="this.value=''">
+						<input type="text" name="birthday" size="45"  onfocus="this.value=''">
 					</td>
 				</tr>
 				<tr>
@@ -45,13 +47,13 @@
 				<tr>
 					<th>Password: </th>
 					<td align="center" colspan="3"> 
-						<input type="password" name="password" size="45" value="pass1234" onfocus="this.value=''">
+						<input type="password" name="password" size="45" onfocus="this.value=''">
 					</td>
 				</tr>
 				<tr>
 					<th>Password Confirmation: </th>
 					<td align="center" colspan="3">
-						<input type="password" name="confirmation" size="45" value="pass1234" onfocus="this.value=''">
+						<input type="password" name="confirmation" size="45" onfocus="this.value=''">
 					</td>
 				</tr>
 				<tr>
