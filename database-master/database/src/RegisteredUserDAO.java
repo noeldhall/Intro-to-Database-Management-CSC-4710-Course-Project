@@ -1,8 +1,12 @@
 
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -27,7 +31,7 @@ public class RegisteredUserDAO extends DAO {
 					+ ");");
 			create.executeUpdate();
 //			preparedStatement.executeUpdate();
-			String sql = "insert into  registered_user( password, email,first_name,last_name,gender,birthday,num_of_followers,num_of_followings) values (?, ?, ?,?,?,?,?,?);";
+			String sql = "insert ignore into  registered_user( password, email,first_name,last_name,gender,birthday,num_of_followers,num_of_followings) values (?, ?, ?,?,?,?,?,?);";
 			preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 			preparedStatement.setString(1, registeredUser.password);
 			preparedStatement.setString(2, registeredUser.email);
@@ -53,6 +57,35 @@ public class RegisteredUserDAO extends DAO {
 	 		
 	 		return true;
 	 		
+	 	}
+	 	
+	 	public List<RegisteredUser> loadUsers(String currentUser) throws SQLException {
+	        List<RegisteredUser> users = new ArrayList<RegisteredUser>(); 
+	        String rootUser="root@wayne.edu";
+	        connect_func();
+	        PreparedStatement create=connect.prepareStatement("SELECT * FROM registered_user");
+		        
+		        ResultSet resultSet = create.executeQuery();
+		      // (String firstName,String lastName, String email, String password, String gender, String birthday, int numOfFollowers, int numOfFollowings) {
+		        while (resultSet.next()) {
+		        	if(currentUser.compareTo(resultSet.getString("email"))!=0&&rootUser.compareTo(resultSet.getString("email"))!=0) {
+		            String firstName = resultSet.getString("first_name");
+		            String lastName = resultSet.getString("last_name");
+		            String email = resultSet.getString("email");
+		            String password=resultSet.getString("password");
+		            String gender=resultSet.getString("gender");
+		            String birthday=resultSet.getString("birthday");
+		            int numFollowers=resultSet.getInt("num_of_followers");
+		            int numFollowing=resultSet.getInt("num_of_followings");
+		          
+		            
+		            
+		             
+		            RegisteredUser r = new RegisteredUser(firstName, lastName, email,password,gender,birthday,numFollowers,numFollowing);
+		            users.add(r);}
+		        }    
+		        resultSet.close();
+	        return users;
 	 	}
 	 
 	    public boolean delete(String registeredUserName) throws SQLException {
@@ -121,4 +154,107 @@ public class RegisteredUserDAO extends DAO {
 	         
 	        return registeredUser;
 	    }
+		public void incrementFollowerCount(String followingEmail) throws SQLException {
+			// TODO Auto-generated method stub
+			  connect_func();
+			String sql="SELECT * FROM registered_user WHERE email = ?";
+			 preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		        preparedStatement.setString(1, followingEmail);
+		        int followerCount=0;
+		        ResultSet resultSet = preparedStatement.executeQuery();
+			 if (resultSet.next()) {
+				  followerCount=resultSet.getInt("num_of_followers");
+			 }
+		        resultSet.close();
+		        followerCount+=1;
+		        sql = "update registered_user set num_of_followers= ? where email = ?";
+		        
+		        preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		     //   preparedStatement.setString(1, registeredUser.name);
+		        preparedStatement.setInt(1, followerCount);
+		        preparedStatement.setString(2, followingEmail);
+		       		         
+		        boolean rowUpdated = preparedStatement.executeUpdate() > 0;
+
+	        
+	       
+		}
+		
+		public void decrementFollowerCount(String followingEmail) throws SQLException {
+			// TODO Auto-generated method stub
+			  connect_func();
+			String sql="SELECT * FROM registered_user WHERE email = ?";
+			 preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		        preparedStatement.setString(1, followingEmail);
+		        int followerCount=0;
+		        ResultSet resultSet = preparedStatement.executeQuery();
+			 if (resultSet.next()) {
+				  followerCount=resultSet.getInt("num_of_followers");
+			 }
+		        resultSet.close();
+		        followerCount-=1;
+		        sql = "update registered_user set num_of_followers= ? where email = ?";
+		        
+		        preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		     //   preparedStatement.setString(1, registeredUser.name);
+		        preparedStatement.setInt(1, followerCount);
+		        preparedStatement.setString(2, followingEmail);
+		       		         
+		        boolean rowUpdated = preparedStatement.executeUpdate() > 0;
+
+	        
+	       
+		}
+		
+		public void incrementFollowingCount(String followerEmail) throws SQLException {
+			// TODO Auto-generated method stub
+			  connect_func();
+			String sql="SELECT * FROM registered_user WHERE email = ?";
+			 preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		        preparedStatement.setString(1, followerEmail);
+		        int followingCount=0;
+		        ResultSet resultSet = preparedStatement.executeQuery();
+			 if (resultSet.next()) {
+				  followingCount=resultSet.getInt("num_of_followings");
+			 }
+		        resultSet.close();
+		        followingCount+=1;
+		        sql = "update registered_user set num_of_followings= ? where email = ?";
+		        
+		        preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		     //   preparedStatement.setString(1, registeredUser.name);
+		        preparedStatement.setInt(1, followingCount);
+		        preparedStatement.setString(2, followerEmail);
+		       		         
+		        boolean rowUpdated = preparedStatement.executeUpdate() > 0;
+
+	        
+	       
+		}
+		
+		public void decrementFollowingCount(String followerEmail) throws SQLException {
+			// TODO Auto-generated method stub
+			  connect_func();
+			String sql="SELECT * FROM registered_user WHERE email = ?";
+			 preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		        preparedStatement.setString(1, followerEmail);
+		        int followingCount=0;
+		        ResultSet resultSet = preparedStatement.executeQuery();
+			 if (resultSet.next()) {
+				  followingCount=resultSet.getInt("num_of_followings");
+			 }
+		        resultSet.close();
+		        followingCount-=1;
+		        sql = "update registered_user set num_of_followings= ? where email = ?";
+		        
+		        preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+		     //   preparedStatement.setString(1, registeredUser.name);
+		        preparedStatement.setInt(1, followingCount);
+		        preparedStatement.setString(2, followerEmail);
+		       		         
+		        boolean rowUpdated = preparedStatement.executeUpdate() > 0;
+
+	        
+	       
+		}
 }

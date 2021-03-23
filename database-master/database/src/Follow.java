@@ -2,6 +2,11 @@
 public class Follow {
 	protected String followingEmail;
 	protected String followerEmail;
+	
+	public Follow(String followerEmail,String followingEmail) {
+		this.followerEmail=followerEmail;
+		this.followingEmail=followingEmail;
+	}
 	public String getFollowingEmail() {
 		return followingEmail;
 	}

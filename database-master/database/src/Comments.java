@@ -11,6 +11,12 @@ public class Comments {
 	protected String email;
 	protected int imageId ;
 	protected String description;
+	
+	public Comments(String email, int imageId, String description) {
+		this.email=email;
+		this.imageId=imageId;
+		this.description=description;
+	}
 	public String getEmail() {
 		return email;
 	}

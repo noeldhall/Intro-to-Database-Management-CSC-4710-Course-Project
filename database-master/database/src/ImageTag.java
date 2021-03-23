@@ -9,6 +9,11 @@
 public class ImageTag {
 	protected int imageId;
 	protected String tag;
+	
+	public ImageTag(int imageId, String tag) {
+		this.imageId=imageId;
+		this.tag=tag;
+	}
 	public int getImageId() {
 		return imageId;
 	}

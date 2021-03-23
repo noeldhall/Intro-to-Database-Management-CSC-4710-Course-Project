@@ -37,9 +37,7 @@ public class InitDB extends DAO {
 		// TODO Auto-generated constructor stub
 		
 		connect_func();
-		//drop  table once to create new format
-//		PreparedStatement create=connect.prepareStatement("DROP TABLE IF EXISTS registered_user;");
-//		create.executeUpdate();
+		
 
 		PreparedStatement create=connect.prepareStatement("CREATE TABLE IF NOT EXISTS registered_user("
 				+ " password varchar(255), email varchar(255), first_name varchar(255), last_name varchar(255),"
@@ -47,6 +45,12 @@ public class InitDB extends DAO {
 				+ "PRIMARY KEY(email)"
 				+ ");");
 		create.executeUpdate();
+		//---------
+		//root user
+		//---------
+		RegisteredUser r=new RegisteredUser(" "," ","root@wayne.edu","pass1234","male","1997-09-23",0,0);
+		RegisteredUserDAO rD=new RegisteredUserDAO();
+		rD.insert(r);
 		
 		//disconnect();
 	}
@@ -94,9 +98,13 @@ public class InitDB extends DAO {
 		create=connect.prepareStatement("DROP TABLE IF EXISTS follow;");
 		create.executeUpdate();
 		
+		//drop registered users table once when resetting
+//		PreparedStatement create1=connect.prepareStatement("DROP TABLE IF EXISTS registered_user;");
+//		create1.executeUpdate();
+		//------------------------------------------------------------------------------
 		//Creating ten initial users, run every time new registeredUser table is created
-//	populateRegisteredUsers();
-				
+			populateRegisteredUsers();
+		//------------------------------------------------------------------------------			
 		
 			create= connect.prepareStatement("CREATE TABLE IF NOT EXISTS image("
 				+ "image_id int , url varchar(255), description varchar(255), post_user varchar(255) NOT NULL"
@@ -162,62 +170,144 @@ create.executeUpdate();
 		long diff = end - offset + 1;
 		Timestamp postTime=new Timestamp(offset + (long)(Math.random() * diff));
 		Date date=new Date(postTime.getTime());
-		//Inserting 10 initial tuples per table
-		// uncomment image insertions when ready
-		Image i=new Image(56, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-1.jpg","none","janed@gmail.com",date,postTime);
-				iD.insert(i);
 		
-	
+		//Inserting 10 initial tuples per table
+		Image i=new Image(569876, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-1.jpg","none","janed@gmail.com",date,postTime);
+				iD.insert(i);
+			ImageTag	 t=new ImageTag(569876,"beatiful");
+				 fPD.insert(t);
+			 Comments c=new Comments("mariar@aol.com",569876,"Sunset is still my favorite color, rainbow is second.!");
+				cD.insert(c); 
+				Like l=new Like("mariar@aol.com",569876,date);
+				lD.insert(l);
 		postTime=new Timestamp(offset + (long)(Math.random() * diff));
 				date=new Date(postTime.getTime());
-		i=new Image(684, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-2.jpg","none","johnd@gmail.com",date,postTime);
+		i=new Image(684983, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-2.jpg","none","johnd@gmail.com",date,postTime);
 		iD.insert(i);
-//		
+		
+		 t=new ImageTag(684983,"beatiful");
+		 fPD.insert(t);
+		  c=new Comments("johnd@gmail.com",684983,"Cloudy days make gorgeous reds!");
+		 cD.insert(c);
+		 l=new Like("johnd@gmail.com",684983,date);
+			lD.insert(l);
 		postTime=new Timestamp(offset + (long)(Math.random() * diff));
 		date=new Date(postTime.getTime());
-	i=new Image(685, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-25.jpg","none","daniele@yahoo.com",date,postTime);
-		iD.insert(i);
-	
-		postTime=new Timestamp(offset + (long)(Math.random() * diff));
-		date=new Date(postTime.getTime());
-		i=new Image(686, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-3.jpg","none","waltonw@gmail.com",date,postTime);
+	i=new Image(685242, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-25.jpg","none","daniele@yahoo.com",date,postTime);
 		iD.insert(i);
 
+		 t=new ImageTag(685242,"beatiful");
+		 fPD.insert(t);
+		  c=new Comments("janed@gmail.com",685242,"The sunset sky speaks of a thousand of colors.");
+		 cD.insert(c);
+		 l=new Like("janed@gmail.com",685242,date);
+			lD.insert(l);
 		postTime=new Timestamp(offset + (long)(Math.random() * diff));
 		date=new Date(postTime.getTime());
-		i=new Image(687, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-4.jpg","none","jennys@protonmail.com",date,postTime);
+		i=new Image(686352, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-3.jpg","none","waltonw@gmail.com",date,postTime);
+		iD.insert(i);
+
+		 t=new ImageTag(686352,"beatiful");
+		 fPD.insert(t);
+		  c=new Comments("daniele@yahoo.com",686352,"The sky broke like an egg into full sunset and the water caught fire.");
+		 cD.insert(c);
+		 l=new Like("daniele@yahoo.com",686352,date);
+			lD.insert(l);
+		postTime=new Timestamp(offset + (long)(Math.random() * diff));
+		date=new Date(postTime.getTime());
+		i=new Image(687908, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-4.jpg","none","jennys@protonmail.com",date,postTime);
 		iD.insert(i);
 		 
+		 t=new ImageTag(687908,"beatiful");
+		 fPD.insert(t);
+		 c=new Comments("waltonw@gmail.com",687908,"I never met a sunset I didn’t like."
+		 		);
+		 cD.insert(c);
+		 l=new Like("waltonw@gmail.com",687908,date);
+			lD.insert(l);
 		postTime=new Timestamp(offset + (long)(Math.random() * diff));
 		date=new Date(postTime.getTime());
-		i=new Image(688, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-6.jpg","none","genesist@gmail.com",date,postTime);
+		i=new Image(688897, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-6.jpg","none","genesist@gmail.com",date,postTime);
 		iD.insert(i);
 		
-		
+		 t=new ImageTag(688897,"beatiful");
+		 fPD.insert(t);
+		 c=new Comments("jennys@protonmail.com",688897,"There’s a sunrise and a sunset every single day, and they’re absolutely free. Don’t miss so many of them.");
+		 cD.insert(c);
+		 l=new Like("jennys@protonmail.com",688897,date);
+			lD.insert(l);
 		postTime=new Timestamp(offset + (long)(Math.random() * diff));		
 		date=new Date(postTime.getTime());
-		i=new Image(689, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-7.jpg","none","darnellj@aol.com",date,postTime);
+		i=new Image(689657, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-7.jpg","none","darnellj@aol.com",date,postTime);
 		iD.insert(i);
 		 
+		 t=new ImageTag(689657,"colorful");
+		 fPD.insert(t);
+		 c=new Comments("genesist@gmail.com",689657,"The first stab of love is like a sunset, a blaze of color — oranges, pearly pinks, vibrant purples.");
+		 cD.insert(c);
+		 l=new Like("genesist@gmail.com",689657,date);
+			lD.insert(l);
 		postTime=new Timestamp(offset + (long)(Math.random() * diff));
 		date=new Date(postTime.getTime());
-		i=new Image(690, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-8.jpg","none","manuels@protonmail.com",date,postTime);
+		i=new Image(690157, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-8.jpg","none","manuels@protonmail.com",date,postTime);
 		iD.insert(i);
 		
+		 t=new ImageTag(690157,"somber");
+		 fPD.insert(t);
+		 c=new Comments("darnellj@aol.com",690157,"“Sunsets are proof that no matter what happens, every day can end beautifully.”");
+		 cD.insert(c);
+		 l=new Like("darnellj@aol.com",690157,date);
+			lD.insert(l);
 		postTime=new Timestamp(offset + (long)(Math.random() * diff));
 		date=new Date(postTime.getTime());
-		i=new Image(691, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-9.jpg","none","lisal@gmail.com",date,postTime);
+		i=new Image(691743, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-9.jpg","none","lisal@gmail.com",date,postTime);
 		iD.insert(i);
 
+		 t=new ImageTag(691743,"beatiful");
+		 fPD.insert(t);
+		 c=new Comments("manuels@protonmail.com",691743,"It is almost impossible to watch a sunset and not dream.");
+		 cD.insert(c);
+		 l=new Like("manuels@protonmail.com",691743,date);
+			lD.insert(l);
 		postTime=new Timestamp(offset + (long)(Math.random() * diff));
 		date=new Date(postTime.getTime());
-		i=new Image(692, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-11.jpg","none","mariar@aol.com",date,postTime);
+		i=new Image(692001, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-11.jpg","none","mariar@aol.com",date,postTime);
 		iD.insert(i);
+		  t=new ImageTag(692001,"beatiful");
+		 fPD.insert(t);
+		 c=new Comments("lisal@gmail.com",692001,"The sun ignites the clouds below it as if they, and the water, itself, were on fire.");
+		 cD.insert(c);
+		 l=new Like("lisal@gmail.com",692001,date);
+			lD.insert(l);
+			//follow table 
+		Follow f=new Follow("johnd@gmail.com","janed@gmail.com");
+		fD.insert(f);
+		f=new Follow("johnd@gmail.com","daniele@yahoo.com");
+		fD.insert(f);
+		f=new Follow("johnd@gmail.com","waltonw@gmail.com");
+		fD.insert(f);
+		f=new Follow("johnd@gmail.com","jennys@protonmail.com");
+		fD.insert(f);
+		f=new Follow("jennys@protonmail.com","daniele@yahoo.com");
+		fD.insert(f);
+		f=new Follow("daniele@yahoo.com","genesist@gmail.com");
+		fD.insert(f);
+		f=new Follow("manuels@protonmail.com","darnellj@aol.com");
+		fD.insert(f);
+		f=new Follow("manuels@protonmail.com","daniele@yahoo.com");
+		fD.insert(f);
+		f=new Follow("mariar@aol.com","daniele@yahoo.com");
+		fD.insert(f);
+		f=new Follow("lisal@gmail.com","daniele@yahoo.com");
+		fD.insert(f);
 //		
 //		postTime=new Timestamp(offset + (long)(Math.random() * diff));
 //		i=new Image(693, "https://weneedfun.com/wp-content/uploads/2016/07/Most-Beautiful-Sunset-Pictures-2.jpg","none",postTime,"none");
 //		iD.insert(i);
-		 
+		
+		
+		
+	
 	
 		
 		

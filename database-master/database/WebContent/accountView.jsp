@@ -5,8 +5,8 @@
 <head><title>Account Page</title></head>
 <body>
 	<div align="center">
-		<h1>Welcome</h1>
-		<a href="login.jsp" target="_self">Logout</a>
+		<h1>Database successfully initialized</h1>
+		<a href="logout" target="_self">Logout</a>
 	</div>
 </body>
 </html>

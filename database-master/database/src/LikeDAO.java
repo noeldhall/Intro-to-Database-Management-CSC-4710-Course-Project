@@ -10,10 +10,11 @@ public class LikeDAO extends DAO {
 
 	 public boolean insert(Like like) throws SQLException {
 	    	connect_func();         
-			String sql = "insert into  likes(email, image_id) values (?, ?)";
+			String sql = "insert ignore into  likes(email, image_id,like_date) values (?, ?,?)";
 			preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 			preparedStatement.setString(1, like.email);
 			preparedStatement.setInt(2, like.imageId);
+			preparedStatement.setDate(3, like.date);
 			
 
 
@@ -27,10 +28,13 @@ public class LikeDAO extends DAO {
 	 
 	    public boolean delete(String Email, String imageId) throws SQLException {
 	    	//changed id param to name in sql statement
-	        String sql = "DELETE FROM community_page WHERE email = "+Email+" AND image_id="+imageId;        
+	        String sql = "DELETE FROM likes WHERE email = ? AND image_id= ?";        
 	        connect_func();
 	         
 	        preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
+	        preparedStatement.setString(1,Email);
+	        preparedStatement.setString(2, imageId);
+	        
 	       // preparedStatement.setString();
 	         
 	        boolean rowDeleted = preparedStatement.executeUpdate() > 0;

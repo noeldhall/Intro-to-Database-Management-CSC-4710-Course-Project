@@ -10,7 +10,7 @@ public class CommentsDAO extends DAO {
 
 	 public boolean insert(Comments comment) throws SQLException {
 	    	connect_func();         
-			String sql = "insert into  comment(email, image_id, description) values (?, ?, ?)";
+			String sql = "insert into  comments(email, image_id, description) values (?, ?, ?)";
 			preparedStatement = (PreparedStatement) connect.prepareStatement(sql);
 			preparedStatement.setString(1, comment.email);
 			preparedStatement.setInt(2, comment.imageId);

@@ -17,8 +17,17 @@ public class Image {
 	protected String description;
 	protected String postUser;
 	protected Date postDate;
+	protected int likeCount;
 	
 	
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
 	public Image() {
 		
 	}

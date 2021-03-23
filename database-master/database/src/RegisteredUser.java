@@ -18,7 +18,23 @@ public class RegisteredUser {
     protected int numOfFollowers;
     protected int numOfFollowings;
     
-    public RegisteredUser() {}
+    public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public RegisteredUser() {}
     
     public RegisteredUser(String firstName,String lastName, String email, String password, String gender, String birthday, int numOfFollowers, int numOfFollowings) {
     	this.firstName=firstName;

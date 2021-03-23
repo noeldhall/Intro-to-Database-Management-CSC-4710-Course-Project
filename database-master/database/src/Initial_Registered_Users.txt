@@ -1,0 +1,15 @@
+// firstName, lastName,  email, password, gender,  birthday,  numOfFollowers,  numOfFollowings)
+"John","Doe","johnd@gmail.com","john1234","male","1995-02-12",1,1
+"Jane","Doe","janed@gmail.com","jane1234","female","1996-03-14",1,1
+"Daniel","Esdee","daniele@yahoo.com","daniel1234","male","2000-05-20",1,1
+"Walton","Wendall","waltonw@gmail.com","walton1234","male","1980-07-23",1,1-05-20",1,1
+"Jenny","Smith","jennys@protonmail.com","jenny1234","female","1985-09-24",1,1
+"Genesis","Topps","genesist@gmail.com","genesis1234","female","1998-10-10",1,1
+"Darnell","Jackson","darnellj@aol.com","darnell1234","male","1970-01-12",2,0
+"Manuel","Sanchez","manuels@protonmail.com","manuel1234","male","1989-12-09",1,1
+"Lisa","Lu","lisal@gmail.com","lisa1234","female","1990-07-21",1,1
+"Maria","Rosas","mariar@aol.com","maria1234","female","1976-11-07",1,1
+" "," ","root@wayne.edu","pass1234","male",,0,0
+
+
+

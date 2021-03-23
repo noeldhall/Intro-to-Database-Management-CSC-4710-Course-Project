@@ -8,7 +8,7 @@
 		<form action="initialize">
 			<input type="submit" value="Initialize Database"/>
 		</form>
-		<a href="login.jsp" target="_self">Logout</a>
+		<a href="logout" target="_self">Logout</a>
 	</div>
 </body>
 </html>

@@ -6,7 +6,7 @@
 <head><title>Account Page</title></head>
 <body>
 	<div align="center">
-	<form action="feed" method="post"><input type="submit" value="return to feed"/></form>
+	<form action="feedPage" method="post"><input type="submit" value="return to feed"/></form>
 	<form action="logout" method="post"><input type="submit" value="logout"></form>
 	<table>
 		<tr>
@@ -14,10 +14,13 @@
 		</tr>
 		<c:forEach items="${userList}" var="Account" varStatus="i">
 			<tr>
-				<td>${Account.firstName} ${Account.lastName}</td>
+				<td>${Account.getFirstName()} ${Account.getLastName()}</td>
 				<td>${Account.email}</td>	
 				<!-- TODO link the follow/unfollow table here relative to current user -->
-				<td> <form action="follow?email=${Account.email}&status=${followList[i.index]}" method="post"><button> 
+				<td> <form action="follow" method="post">
+				<input type="hidden" name="followingEmail" value="${Account.email}">
+				<input type="submit" value="Follow"/>
+			<!--  	<button>
 				<c:choose> 
 					<c:when test="${followList[i.index]}" > 
 						<c:out default="unfollow" value="unfollow"/> 
@@ -26,8 +29,10 @@
 						<c:out default="follow" value="follow"/>
 					</c:otherwise> 
 				</c:choose>
-				</button>
-				</form></td>
+				</button> -->
+				</form>			<form action="unfollow" method="post"><input type="hidden" name="followingEmail" value="${Account.email}"><input type="submit" value="Unfollow"/>
+				</form>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>

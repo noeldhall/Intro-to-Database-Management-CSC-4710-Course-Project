@@ -1,8 +1,15 @@
+import java.sql.Date;
 
 public class Like {
 protected String email;
 protected int imageId;
+protected Date date;
 
+public Like(String email, int imageId, Date date) {
+	this.email=email;
+	this.imageId=imageId;
+	this.date=date;
+}
 public String getEmail() {
 	return email;
 }
